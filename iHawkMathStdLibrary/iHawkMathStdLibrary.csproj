@@ -4,6 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>ColdDaddy</Authors>
     <Copyright>Copyright © ColdDaddy 2020</Copyright>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/db300/MathLibrary</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
