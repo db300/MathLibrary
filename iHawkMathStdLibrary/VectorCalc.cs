@@ -6,7 +6,7 @@ using System.Text;
 namespace iHawkMathStdLibrary
 {
     /// <summary>
-    /// 向量计算
+    /// 向量计算器
     /// </summary>
     public static class VectorCalc
     {
