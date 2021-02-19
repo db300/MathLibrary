@@ -107,5 +107,25 @@ namespace iHawkMathStdLibrary
             if (Math.Abs(dn - 90) <= 0) return new PointF(pt2.X, pt22.Y); //垂直倾斜
             return PointF.Empty;
         }
+
+        /// <summary>
+        /// 获取一组点集合的最值点(最左/右/上/下)
+        /// </summary>
+        /// <param name="points">点集数组</param>
+        /// <returns>最值点数据(最左、最右、最上、最下)</returns>
+        public static PointF[] GetExtremePoints(PointF[] points)
+        {
+            if (points == null) return null;
+            PointF left = points[0], right = points[0], top = points[0], bottom = points[0];
+            foreach (var point in points)
+            {
+                if (point.X < left.X) left = point;
+                if (point.X > right.X) right = point;
+                if (point.Y < bottom.Y) bottom = point;
+                if (point.Y > top.Y) top = point;
+            }
+
+            return new[] {left, right, top, bottom};
+        }
     }
 }
