@@ -45,7 +45,23 @@ namespace iHawkMathStdLibrary
         public static Point GetMidPoint(PointF p1, PointF p2)
         {
             var point = GetMidPointF(p1, p2);
-            return new Point((int) (point.X + 0.5), (int) (point.Y + 0.5));
+            return new Point((int)(point.X + 0.5), (int)(point.Y + 0.5));
+        }
+
+        /// <summary>
+        /// 获取直线上某点
+        /// </summary>
+        /// <param name="pt0">直线上已知点</param>
+        /// <param name="angle">直线倾斜角度</param>
+        /// <param name="deltaX">距离已知点横坐标</param>
+        /// <returns>所求点</returns>
+        public static PointF GetPointOnLine(PointF pt0, double angle, float deltaX = 10)
+        {
+            var radian = Math.PI * angle / 180;//根据角度值获取弧度值
+            var tan = Math.Tan(radian);//根据弧度值获取正切值
+            var deltaY = deltaX * tan;
+            var pt = new PointF(pt0.X + deltaX, (float)(pt0.Y + deltaY));
+            return pt;
         }
 
         /// <summary>
@@ -57,7 +73,7 @@ namespace iHawkMathStdLibrary
         /// <returns>所求点</returns>
         public static PointF GetPointOnVector(PointF pt1, PointF pt2, float distance)
         {
-            var d = (float) Math.Sqrt((pt2.X - pt1.X) * (pt2.X - pt1.X) + (pt2.Y - pt1.Y) * (pt2.Y - pt1.Y));
+            var d = (float)Math.Sqrt((pt2.X - pt1.X) * (pt2.X - pt1.X) + (pt2.Y - pt1.Y) * (pt2.Y - pt1.Y));
             var t = distance / d;
             float x = t * pt2.X + (1 - t) * pt1.X, y = t * pt2.Y + (1 - t) * pt1.Y;
             return new PointF(x, y);
@@ -74,8 +90,8 @@ namespace iHawkMathStdLibrary
         {
             float dx = pt2.X - pt1.X, dy = pt2.Y - pt1.Y;
             float
-                dx1 = (float) (dx * Math.Cos(angle * Math.PI / 180) - dy * Math.Sin(angle * Math.PI / 180)),
-                dy1 = (float) (dx * Math.Sin(angle * Math.PI / 180) + dy * Math.Cos(angle * Math.PI / 180));
+                dx1 = (float)(dx * Math.Cos(angle * Math.PI / 180) - dy * Math.Sin(angle * Math.PI / 180)),
+                dy1 = (float)(dx * Math.Sin(angle * Math.PI / 180) + dy * Math.Cos(angle * Math.PI / 180));
             return new PointF(pt1.X + dx1, pt1.Y + dy1); //pt2绕pt1旋转后的点
         }
 
@@ -125,7 +141,7 @@ namespace iHawkMathStdLibrary
                 if (point.Y > top.Y) top = point;
             }
 
-            return new[] {left, right, top, bottom};
+            return new[] { left, right, top, bottom };
         }
     }
 }
