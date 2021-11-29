@@ -49,18 +49,48 @@ namespace iHawkMathStdLibrary
         }
 
         /// <summary>
-        /// 获取直线上某点
+        /// 获取倾斜直线上某点
         /// </summary>
         /// <param name="pt0">直线上已知点</param>
         /// <param name="angle">直线倾斜角度</param>
-        /// <param name="deltaX">距离已知点横坐标</param>
+        /// <param name="deltaX">距离已知点横坐标增量</param>
         /// <returns>所求点</returns>
         public static PointF GetPointOnLine(PointF pt0, double angle, float deltaX = 10)
+        {
+            return GetPointOnLine(pt0.X, pt0.Y, angle, deltaX);
+        }
+
+        /// <summary>
+        /// (overload)获取倾斜直线上某点
+        /// </summary>
+        /// <param name="pX">直线上已知点横坐标</param>
+        /// <param name="pY">直线上已知点纵坐标</param>
+        /// <param name="angle">直线倾斜角度</param>
+        /// <param name="deltaX">距离已知点横坐标增量</param>
+        /// <returns>所求点</returns>
+        public static PointF GetPointOnLine(float pX, float pY, double angle, float deltaX = 10)
         {
             var radian = Math.PI * angle / 180;//根据角度值获取弧度值
             var tan = Math.Tan(radian);//根据弧度值获取正切值
             var deltaY = deltaX * tan;
-            var pt = new PointF(pt0.X + deltaX, (float)(pt0.Y + deltaY));
+            var pt = new PointF(pX + deltaX, (float)(pY + deltaY));
+            return pt;
+        }
+
+        /// <summary>
+        /// 获取倾斜直线上某点
+        /// </summary>
+        /// <param name="pX">直线上已知点横坐标</param>
+        /// <param name="pY">直线上已知点纵坐标</param>
+        /// <param name="angle">直线倾斜角度</param>
+        /// <param name="deltaY">距离已知点纵坐标增量</param>
+        /// <returns>所求点</returns>
+        public static PointF GetPointOnLineByDeltaY(float pX, float pY, double angle, float deltaY = 10)
+        {
+            var radian = Math.PI * angle / 180;//根据角度值获取弧度值
+            var tan = Math.Tan(radian);//根据弧度值获取正切值
+            var deltaX = deltaY / tan;
+            var pt = new PointF((float)(pX + deltaX), pY + deltaY);
             return pt;
         }
 
