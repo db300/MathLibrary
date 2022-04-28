@@ -18,7 +18,7 @@ namespace iHawkMathStdLibrary
         /// <returns>拆分后的三次贝塞尔曲线锚点及手柄点数组</returns>
         public static PointF[] SplitCubicCurve(PointF[] points, int time = 1)
         {
-            var outpoints = new PointF[(int) (points.Length * 2 * Math.Pow(2, time - 1))];
+            var outpoints = new PointF[(int)(points.Length * 2 * Math.Pow(2, time - 1))];
             var loop = 0;
             if (time == 1)
             {
@@ -50,10 +50,8 @@ namespace iHawkMathStdLibrary
                     outPts = SplitCubicCurve(outPts);
                     time--;
                 }
-
                 for (var i = 0; i < outPts.Length; i++) outpoints[i] = outPts[i];
             }
-
             return outpoints;
         }
 
