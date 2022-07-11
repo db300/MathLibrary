@@ -6,4 +6,4 @@
 
 ## 详细介绍
 
-https://www.yuque.com/docs/share/cdfad144-3f08-44d3-9fa9-a415cbb20fb0?# 《项目说明》
+[点击查看](https://www.yuque.com/docs/share/cdfad144-3f08-44d3-9fa9-a415cbb20fb0?#)
