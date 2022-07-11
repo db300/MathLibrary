@@ -6,4 +6,5 @@
 
 ## 详细介绍
 
+<a href="https://www.yuque.com/docs/share/cdfad144-3f08-44d3-9fa9-a415cbb20fb0?#" target="_blank">点击查看</a>
 [点击查看](https://www.yuque.com/docs/share/cdfad144-3f08-44d3-9fa9-a415cbb20fb0?#)
