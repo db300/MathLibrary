@@ -109,5 +109,21 @@ namespace iHawkMathStdLibrary
             var c2Y = (end.Y + 2 * controlPoint.Y) / 3;
             return new Tuple<PointF, PointF, PointF, PointF>(start, new PointF(c1X, c1Y), new PointF(c2X, c2Y), end);
         }
+
+        /// <summary>
+        /// 计算二次贝塞尔曲线控制点
+        /// </summary>
+        /// <param name="p0">贝塞尔曲线起点</param>
+        /// <param name="p2">贝塞尔曲线终点</param>
+        /// <param name="p">曲线上的点，假定该点对应的t=0.5</param>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public static PointF GetQuadraticCurveControlPoint(PointF p0, PointF p2, PointF p, float t = 0.5F)
+        {
+            //𝑃1 = 2𝑃(0.5)−0.5𝑃0−0.5𝑃2
+            var p1X = 2 * p.X - 0.5 * p0.X - 0.5 * p2.X;
+            var p1Y = 2 * p.Y - 0.5 * p0.Y - 0.5 * p2.Y;
+            return new PointF((float)p1X, (float)p1Y);
+        }
     }
 }
