@@ -85,13 +85,29 @@ namespace iHawkMathStdLibrary
             for (var i = 0; i <= accuracy; i++)
             {
                 var pt = new PointF();
-                var t = (float) i / accuracy;
+                var t = (float)i / accuracy;
                 pt.X = (1 - t) * (1 - t) * pt0.X + 2 * t * (1 - t) * pt1.X + t * t * pt2.X;
                 pt.Y = (1 - t) * (1 - t) * pt0.Y + 2 * t * (1 - t) * pt1.Y + t * t * pt2.Y;
                 points[i] = pt;
             }
 
             return points;
+        }
+
+        /// <summary>
+        /// 二次曲线点转换为三次曲线点
+        /// </summary>
+        /// <param name="start">二次曲线起始线上点</param>
+        /// <param name="controlPoint">二次曲线线外控制点</param>
+        /// <param name="end">二次曲线终止线上点</param>
+        /// <returns>item1: 起始线上点, item2: 线外控制点1, item3: 线外控制点2</returns>
+        internal static Tuple<PointF, PointF, PointF, PointF> Quadratic2Cubic(PointF start, PointF controlPoint, PointF end)
+        {
+            var c1X = (start.X + 2 * controlPoint.X) / 3;
+            var c1Y = (start.Y + 2 * controlPoint.Y) / 3;
+            var c2X = (end.X + 2 * controlPoint.X) / 3;
+            var c2Y = (end.Y + 2 * controlPoint.Y) / 3;
+            return new Tuple<PointF, PointF, PointF, PointF>(start, new PointF(c1X, c1Y), new PointF(c2X, c2Y), end);
         }
     }
 }
