@@ -101,7 +101,7 @@ namespace iHawkMathStdLibrary
         /// <param name="controlPoint">二次曲线线外控制点</param>
         /// <param name="end">二次曲线终止线上点</param>
         /// <returns>item1: 起始线上点, item2: 线外控制点1, item3: 线外控制点2</returns>
-        internal static Tuple<PointF, PointF, PointF, PointF> Quadratic2Cubic(PointF start, PointF controlPoint, PointF end)
+        public static Tuple<PointF, PointF, PointF, PointF> Quadratic2Cubic(PointF start, PointF controlPoint, PointF end)
         {
             var c1X = (start.X + 2 * controlPoint.X) / 3;
             var c1Y = (start.Y + 2 * controlPoint.Y) / 3;
@@ -111,19 +111,53 @@ namespace iHawkMathStdLibrary
         }
 
         /// <summary>
-        /// 计算二次贝塞尔曲线控制点
+        /// 计算二次贝塞尔曲线控制点(默认 t = 0.5F)
         /// </summary>
         /// <param name="p0">贝塞尔曲线起点</param>
         /// <param name="p2">贝塞尔曲线终点</param>
         /// <param name="p">曲线上的点，假定该点对应的t=0.5</param>
-        /// <param name="t"></param>
-        /// <returns></returns>
-        public static PointF GetQuadraticCurveControlPoint(PointF p0, PointF p2, PointF p, float t = 0.5F)
+        public static PointF GetQuadraticCurveControlPoint(PointF p0, PointF p2, PointF p)
         {
             //𝑃1 = 2𝑃(0.5)−0.5𝑃0−0.5𝑃2
             var p1X = 2 * p.X - 0.5 * p0.X - 0.5 * p2.X;
             var p1Y = 2 * p.Y - 0.5 * p0.Y - 0.5 * p2.Y;
             return new PointF((float)p1X, (float)p1Y);
+        }
+
+        /// <summary>
+        /// 计算二次贝塞尔曲线控制点
+        /// </summary>
+        /// <param name="p0">贝塞尔曲线起点</param>
+        /// <param name="p2">贝塞尔曲线终点</param>
+        /// <param name="p">曲线上的点</param>
+        /// <param name="t">p点对应的t</param>
+        public static PointF GetQuadraticCurveControlPoint(PointF p0, PointF p2, PointF p, float t)
+        {
+            //𝑃1 = (𝑃(t)−(1-t)*(1-t)𝑃0−t*t𝑃2)/(2*t*(1-t))
+            var p1X = (p.X - (1 - t) * (1 - t) * p0.X - t * t * p2.X) / 2 / t / (1 - t);
+            var p1Y = (p.Y - (1 - t) * (1 - t) * p0.Y - t * t * p2.Y) / 2 / t / (1 - t);
+            return new PointF((float)p1X, (float)p1Y);
+        }
+
+        /// <summary>
+        /// 获取三次贝塞尔曲线上某一点对应的t值
+        /// </summary>
+        /// <param name="start">贝塞尔曲线起点</param>
+        /// <param name="control1">贝塞尔曲线控制点1</param>
+        /// <param name="control2">贝塞尔曲线控制点2</param>
+        /// <param name="end">贝塞尔曲线终点</param>
+        /// <param name="pt">曲线上已知点</param>
+        /// <param name="alpha">误差，默认1</param>
+        /// <param name="time">t分割次数，默认10000</param>
+        public static float GetCubicCurvePointT(PointF start, PointF control1, PointF control2, PointF end, PointF pt, float alpha = 1F, int time = 10000)
+        {
+            for (var i = 0; i <= time; i++)
+            {
+                var t = (float)i / time;
+                var p = GetCubicCurvePoint(start, control1, control2, end, t);
+                if (DistanceCalc.GetDistance(pt, p) <= alpha) return t;
+            }
+            return -1;
         }
     }
 }
