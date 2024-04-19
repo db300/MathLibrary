@@ -55,9 +55,9 @@ namespace iHawkMathStdLibrary
         /// <param name="angle">直线倾斜角度</param>
         /// <param name="deltaX">距离已知点横坐标增量</param>
         /// <returns>所求点</returns>
-        public static PointF GetPointOnLine(PointF pt0, double angle, float deltaX = 10)
+        public static PointF GetPointOnLineByDeltaX(PointF pt0, double angle, float deltaX = 10)
         {
-            return GetPointOnLine(pt0.X, pt0.Y, angle, deltaX);
+            return GetPointOnLineByDeltaX(pt0.X, pt0.Y, angle, deltaX);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace iHawkMathStdLibrary
         /// <param name="angle">直线倾斜角度</param>
         /// <param name="deltaX">距离已知点横坐标增量</param>
         /// <returns>所求点</returns>
-        public static PointF GetPointOnLine(float pX, float pY, double angle, float deltaX = 10)
+        public static PointF GetPointOnLineByDeltaX(float pX, float pY, double angle, float deltaX = 10)
         {
             var radian = Math.PI * angle / 180;//根据角度值获取弧度值
             var tan = Math.Tan(radian);//根据弧度值获取正切值
@@ -172,6 +172,52 @@ namespace iHawkMathStdLibrary
             }
 
             return new[] { left, right, top, bottom };
+        }
+
+        /// <summary>
+        /// 获取点到直线的垂点
+        /// </summary>
+        /// <param name="pt1">直线点1</param>
+        /// <param name="pt2">直线点2</param>
+        /// <param name="pt">平面上某点</param>
+        /// <returns>点pt到直线pt1pt2的垂点</returns>
+        public static PointF GetVerticalPointOnLine(PointF pt1, PointF pt2, PointF pt)
+        {
+            if (pt2.X == pt1.X)
+            {
+                return new PointF(pt1.X, pt.Y);
+            }
+            else
+            {
+                var k = (pt2.Y - pt1.Y) / (pt2.X - pt1.X);
+                var x = (k * k * pt1.X + k * (pt.Y - pt1.Y) + pt.X) / (k * k + 1);
+                var y = k * (x - pt1.X) + pt1.Y;
+                return new PointF(x, y);
+            }
+        }
+
+        /// <summary>
+        /// 获取一组点中距离参考点最近的点
+        /// </summary>
+        /// <param name="ptRef">参考点</param>
+        /// <param name="points">样本点</param>
+        public static PointF GetNearestPoint(PointF ptRef, List<PointF> points)
+        {
+            if (points.Count == 0) return PointF.Empty;
+            if (points.Count == 1) return points[0];
+            var nearestPoint = points[0];
+            double d = DistanceCalc.GetDistance(ptRef, points[0]);
+            for (int i = 1; i < points.Count; i++)
+            {
+                var point = points[i];
+                double d1;
+                if ((d1 = DistanceCalc.GetDistance(point, ptRef)) <= d)
+                {
+                    nearestPoint = point;
+                    d = d1;
+                }
+            }
+            return nearestPoint;
         }
     }
 }

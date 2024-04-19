@@ -26,7 +26,6 @@ namespace iHawkMathStdLibrary
                 top = Math.Min(top, pointList[i].Y);
                 bottom = Math.Max(bottom, pointList[i].Y);
             }
-
             return new RectangleF(left, top, right - left, bottom - top);
         }
 
@@ -44,7 +43,6 @@ namespace iHawkMathStdLibrary
                 top = Math.Min(top, rectangleList[i].Top);
                 bottom = Math.Max(bottom, rectangleList[i].Bottom);
             }
-
             return new RectangleF(left, top, right - left, bottom - top);
         }
     }
