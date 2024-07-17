@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 
 namespace iHawkMathStdLibrary
 {
@@ -11,6 +10,20 @@ namespace iHawkMathStdLibrary
     /// </summary>
     public static class RelationCalc
     {
+        /// <summary>
+        /// 判断点在线段区域内
+        /// </summary>
+        /// <param name="pt1">线段端点1</param>
+        /// <param name="pt2">线段端点2</param>
+        /// <param name="pt0">待判断点</param>
+        /// <returns>判断结果，true为在线段区域内，反之则为false</returns>
+        public static bool PointInLineSegment(PointF pt1, PointF pt2, PointF pt0)
+        {
+            return (pt0.X >= Math.Min(pt1.X, pt2.X) && pt0.X <= Math.Max(pt1.X, pt2.X) && pt0.Y >= Math.Min(pt1.Y, pt2.Y) && pt0.Y <= Math.Max(pt1.Y, pt2.Y))
+                || (Math.Abs(pt1.X - pt2.X) <= 0 && pt0.Y >= Math.Min(pt1.Y, pt2.Y) && pt0.Y <= Math.Max(pt1.Y, pt2.Y) && Math.Abs(pt0.X - pt1.X) <= 5)
+                || (Math.Abs(pt1.Y - pt2.Y) <= 0 && pt0.X >= Math.Min(pt1.X, pt2.X) && pt0.X <= Math.Max(pt1.X, pt2.X) && Math.Abs(pt0.Y - pt1.Y) <= 5);
+        }
+
         /// <summary>
         /// 判断点是否在多边形内（包含点在多边形上）
         /// </summary>
